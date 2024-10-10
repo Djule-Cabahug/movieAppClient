@@ -1,38 +1,32 @@
 import { useState, useEffect } from 'react';
-import ProductCard from './ProductCard';
+import { Row } from 'react-bootstrap';
+import MovieCard from './MovieCard';
 
-export default function UserView({productsData}) {
+export default function UserView({moviesData}) {
 
-	const [products, setProducts] = useState([])
+	const [movies, setMovies] = useState([])
 
 	useEffect(() => {
-		console.log(productsData);
+		console.log(moviesData);
 
-		const productsArr = productsData.map(product => {
-			//only render the active products
-			if(product.isActive === true) {
-
-				return(
-					<ProductCard imageSrc={`${product._id}.jpg`} productProp={product} key={product._id}/>
-				)
-
-			} else {
-				return null;
-			}
+		const moviesArr = moviesData.map(movie => {
+			return(
+				<MovieCard movieProp={movie} key={movie._id}/>
+			)
 		})
 
-		//set the products state to the result of our map function, to bring our returned product component outside of the scope of our useEffect where our return statement below can see.
-		setProducts(productsArr)
+		//set the movies state to the result of our map function, to bring our returned movie component outside of the scope of our useEffect where our return statement below can see.
+		setMovies(moviesArr)
 
-	}, [productsData])
+	}, [moviesData])
 
 
 	return(
 		<>
-			<h2 className='products-title text-center'>Products</h2>
-			<div className='products'>
-				{ products }
-			</div>
+			<h2 className='movies-title text-center my-3'>Movies</h2>
+			<Row>
+				{ movies }
+			</Row>
 		</>
 		)
 }

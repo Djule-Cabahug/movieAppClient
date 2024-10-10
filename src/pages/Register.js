@@ -42,7 +42,7 @@ export default function Register() {
 		//Prevents page redirection via form submission
 		e.preventDefault();
 
-		fetch(`https://fitnessapp-api-ln8u.onrender.com/users/register`, {
+		fetch(`https://movieapp-api-lms1.onrender.com/users/register`, {
 
 			method: 'POST',
 			headers: {
@@ -75,7 +75,7 @@ export default function Register() {
 	return (
 
 		(user.id !== null) ?
-		    <Navigate to="/products" />
+		    <Navigate to="/movies" />
 		    :
 		<>
 			<Form onSubmit={(e) => registerUser(e)}>

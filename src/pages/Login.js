@@ -19,7 +19,7 @@ export default function Login() {
 
         // Prevents page redirection via form submission
         e.preventDefault();
-        fetch(`https://fitnessapp-api-ln8u.onrender.com/users/login`, {
+        fetch(`https://movieapp-api-lms1.onrender.com/users/login`, {
             method: 'POST',
             headers: {
                 "Content-Type": "application/json"
@@ -39,11 +39,7 @@ export default function Login() {
                 // Stores the token of the authenticated user in the local storage
                 // Syntax: localStorage.setItem('propertyName', value)
                 localStorage.setItem('token', data.access)
-
-                // update user state variable with setUser()
-                setUser({
-                    id: localStorage.getItem("token")
-                })
+                retrieveUserDetails(data.access);                                
 
                 // Clear input fields after submission
                 setEmail('');
@@ -51,7 +47,7 @@ export default function Login() {
 
                 notyf.success(`You are now logged in`);
             
-            } else if (data.error === "Email and password do not match") {
+            } else if (data.message === "Email and password do not match") {
 
                 notyf.error(`Email and password do not match`);
 
@@ -63,6 +59,27 @@ export default function Login() {
 
 				notyf.error("Something went wrong. Please contact us for assistance.")
 			}
+        })
+    }
+
+    function retrieveUserDetails(token){
+        //The token will be sent as part of the request's header information
+        //We put "Bearer" in front of the token to follow the implementation standards for JWTs
+        fetch(`https://movieapp-api-lms1.onrender.com/users/details`, {
+            headers: {
+                Authorization: `Bearer ${ token }`
+            }
+        })
+        .then(res => res.json())
+        .then(data => {
+            console.log(data);
+
+            //Changes the global "user" state to store the "id" and the "isAdmin" property of the user which will be used for validation across the whole application
+            setUser({
+                id: data.user._id,
+                isAdmin: data.user.isAdmin
+            })
+
         })
     }
     
@@ -82,7 +99,7 @@ export default function Login() {
             
         (user.id !== null)
         ?
-        <Navigate to="/workouts" />
+        <Navigate to="/movies" />
         :
         <>
             <Form onSubmit={(e) => authenticate(e)}>

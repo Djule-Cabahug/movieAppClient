@@ -2,15 +2,15 @@ import { useState } from 'react';
 import { Button } from 'react-bootstrap';
 import { Notyf } from 'notyf';
 
-export default function DeleteWorkout({workout, fetchData}){
+export default function DeleteMovie({movie, fetchData}){
 
     const notyf = new Notyf();
 
-    const [workoutId, setWorkoutId] = useState(workout._id)
+    const [movieId, setMovieId] = useState(movie._id)
 
-    const deleteWorkout = () => {
+    const deleteMovie = () => {
 
-        fetch(`https://fitnessapp-api-ln8u.onrender.com/workouts/deleteWorkout/${workoutId}`, {
+        fetch(`https://movieapp-api-lms1.onrender.com/movies/deleteMovie/${movieId}`, {
             method: "DELETE",
             headers: {
                 Authorization: `Bearer ${localStorage.getItem("token")}`
@@ -20,17 +20,17 @@ export default function DeleteWorkout({workout, fetchData}){
         .then(data => {
             console.log(data);
             
-            if (data.error === 'No Workout deleted'){
+            if (data.error === 'Movie not deleted'){
 
                 fetchData();
 
-                notyf.error("No Workout deleted");
+                notyf.error("Movie not deleted");
 
-            } else if (data.message === 'Workout deleted successfully') {
+            } else if (data.message === 'Movie deleted successfully') {
 
                 fetchData();
 
-                notyf.success("Workout deleted successfully");
+                notyf.success("Movie deleted successfully");
 
             } else {
 
@@ -42,6 +42,6 @@ export default function DeleteWorkout({workout, fetchData}){
     }
 
     return (
-        <Button variant='danger' className='mx-2' onClick={deleteWorkout}>Delete</Button>
+        <Button variant='danger' className='d-block mx-auto' onClick={deleteMovie}>Delete</Button>
     )
 }

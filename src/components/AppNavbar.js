@@ -15,22 +15,19 @@ export default function AppNavbar() {
 	return (
 		<Navbar expand="lg" className="bg-body-tertiary" data-bs-theme="dark">
 		  <Container>
-		    <Navbar.Brand as={NavLink} to="/" className='fs-3'>Fitness Tracker</Navbar.Brand>
+		    <Navbar.Brand as={NavLink} to="/" className='fs-3'>Movie Catalog</Navbar.Brand>
 		    <Navbar.Toggle aria-controls="basic-navbar-nav" />
 		    <Navbar.Collapse id="basic-navbar-nav">
 		      <Nav className="me-auto">
-		        {/* <Nav.Link as={NavLink} to="/news">News</Nav.Link> */}
+				<Nav.Link as={NavLink} to="/movies">Movies</Nav.Link>
 
-		       {(user.id !== null) 
-			   	? 
-				<>
-					<Nav.Link as={NavLink} to="/workouts">Workouts</Nav.Link>
+				{(user.id !== null) 
+				? 
 					<Nav.Link as={NavLink} to="/logout">Logout</Nav.Link>
-				</>
 				:
 				<>
-				    <Nav.Link as={NavLink} to="/login">Login</Nav.Link>
-				    <Nav.Link as={NavLink} to="/register">Register</Nav.Link>
+					<Nav.Link as={NavLink} to="/login">Login</Nav.Link>
+					<Nav.Link as={NavLink} to="/register">Register</Nav.Link>
 				</>
 			}
 		        

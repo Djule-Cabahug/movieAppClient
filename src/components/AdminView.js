@@ -1,65 +1,60 @@
 import { useState, useEffect } from 'react';
 import { Table } from 'react-bootstrap';
 import { Link } from 'react-router-dom'
-import EditProduct from './EditProduct';
-import ArchiveProduct from './ArchiveProduct';
+import EditMovie from './EditMovie';
+import DeleteMovie from './DeleteMovie';
 
 
-export default function AdminView({ productsData, fetchData }) {
+export default function AdminView({ moviesData, fetchData }) {
 
 
-    const [products, setProducts] = useState([])
+    const [movies, setMovies] = useState([])
 
 
-    //Getting the productsData from the products page
+    //Getting the moviesData from the movies page
     useEffect(() => {
-        console.log(productsData);
+        console.log(moviesData);
 
-        const productsArr = productsData.map(product => {
+        const moviesArr = moviesData.map(movie => {
             return (
-                <tr key={product._id}>
-                    <td>{product._id}</td>
-                    <td>{product.name}</td>
-                    <td>{product.description}</td>
-                    <td>&#8369;{product.price}</td>
-                    <td className={product.isActive ? "text-success" : "text-danger"}>
-                        {product.isActive ? "Available" : "Unavailable"}
-                    </td>
-                    <td> <EditProduct product={product} fetchData={fetchData} /> </td> 
-                    <td><ArchiveProduct product={product} isActive={product.isActive} fetchData={fetchData}/></td>
+                <tr key={movie._id}>
+                    <td>{movie.title}</td>
+                    <td>{movie.director}</td>
+                    <td>{movie.year}</td>
+                    <td>{movie.description}</td>
+                    <td>{movie.genre}</td>
+                    <td><EditMovie movie={movie} fetchData={fetchData} /></td> 
+                    <td><DeleteMovie movie={movie} fetchData={fetchData}/></td>
                 </tr>
                 )
         })
 
-        setProducts(productsArr)
+        setMovies(moviesArr)
 
-    }, [productsData])
+    }, [moviesData])
 
 
     return(
         <>
             <h1 className="text-center my-4">Admin Dashboard</h1>
 
-            <div className='d-flex justify-content-center gap-2 mb-4'>
-                <Link className='btn btn-warning' to="/addProduct">Add Product</Link>
-                <Link className='btn btn-warning' to="/orders">Orders</Link>
-            </div>
+            <Link className='btn btn-warning mb-3 add-movie-btn' to="/addMovie" >Add Movie<span className='material-symbols-outlined'>add</span></Link>
 
             
             <Table striped bordered hover responsive>
                 <thead>
                     <tr className="text-center">
-                        <th className='text-white bg-dark'>ID</th>
-                        <th className='text-white bg-dark'>Name</th>
+                        <th className='text-white bg-dark'>Title</th>
+                        <th className='text-white bg-dark'>Director</th>
+                        <th className='text-white bg-dark'>Year</th>
                         <th className='text-white bg-dark'>Description</th>
-                        <th className='text-white bg-dark'>Price</th>
-                        <th className='text-white bg-dark'>Availability</th>
+                        <th className='text-white bg-dark'>Genre</th>
                         <th className='text-white bg-dark' colSpan="2">Actions</th>
                     </tr>
                 </thead>
 
                 <tbody>
-                    {products}
+                    {movies}
                 </tbody>
             </Table>    
         </>

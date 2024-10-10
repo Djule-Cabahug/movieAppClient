@@ -1,5 +1,5 @@
 import { useState, useEffect, useContext } from 'react';
-import WorkoutCard from '../components/WorkoutCard';
+import WorkoutCard from '../components/MovieCard';
 import { Notyf } from 'notyf';
 import { Row, Button, Modal, Form } from 'react-bootstrap';
 

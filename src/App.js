@@ -5,7 +5,9 @@ import AppNavbar from './components/AppNavbar';
 import Container from 'react-bootstrap/Container'
 import Register from './pages/Register';
 import Login from './pages/Login';
-import Workouts from './pages/Workouts';
+import Movies from './pages/Movies';
+import MovieView from './pages/MovieView';
+import AddMovie from './pages/AddMovie';
 import Logout from './pages/Logout';
 import Error from './pages/Error';
 
@@ -17,7 +19,8 @@ function App() {
   //This can be achieved using prop drilling, or via react context
   //This will used to store the user information and will be used for validating if a user  is logged in on the app or not
   const [user, setUser] = useState({
-    id: null
+    id: null,
+    isAdmin: null
   })
 
   //function for clearing localStorage on logout.
@@ -26,19 +29,30 @@ function App() {
   }
 
   useEffect(() => {
+    fetch(`https://movieapp-api-lms1.onrender.com/users/details`, {
+      headers: {
+        Authorization: `Bearer ${ localStorage.getItem('token') }`
+      }
+    })
+    .then(res => res.json())
+    .then(data => {
+      console.log(data)
+      console.log(data.auth !== "Failed")
+      if (data.auth !== "Failed") {
+        setUser({
+          id: data.user._id,
+          isAdmin: data.user.isAdmin
+        });
 
-    if (localStorage.getItem("token")) {
-      
-      setUser({
-        id: localStorage.getItem("token")
-      });
-
-    } else {
-      setUser({
-        id: null
-      });
-    }
+      } else {
+        setUser({
+          id: null,
+          isAdmin: null
+        });
+      }
+    })
   }, []) 
+
 
   //Used to check if the information is properly stored upon login and the localStorage information is cleared upon logout.
   useEffect(()=> {
@@ -56,7 +70,9 @@ function App() {
             <AppNavbar/>
             <Container>
               <Routes>
-                <Route path="/workouts" element={<Workouts />}/>
+                <Route path="/movies" element={<Movies />}/>
+                <Route path="/movies/:movieId" element={<MovieView/>}/>
+                <Route path="/addMovie" element={<AddMovie />} />
                 <Route path="/login" element={<Login />}/>
                 <Route path="/register" element={<Register />}/>
                 <Route path="/logout" element={<Logout />}/>

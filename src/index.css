@@ -11,7 +11,7 @@
   min-height: 90vh;
 }
 
-.add-workout-btn {
-  display: flex;
+.add-movie-btn {
+  display: inline-flex;
   gap: 4px;
 }
