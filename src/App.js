@@ -5,6 +5,7 @@ import AppNavbar from './components/AppNavbar';
 import Container from 'react-bootstrap/Container'
 import Register from './pages/Register';
 import Login from './pages/Login';
+import Home from './pages/Home';
 import Movies from './pages/Movies';
 import MovieView from './pages/MovieView';
 import AddMovie from './pages/AddMovie';
@@ -70,6 +71,7 @@ function App() {
             <AppNavbar/>
             <Container>
               <Routes>
+              <Route path='/' element={<Home />} />
                 <Route path="/movies" element={<Movies />}/>
                 <Route path="/movies/:movieId" element={<MovieView/>}/>
                 <Route path="/addMovie" element={<AddMovie />} />
